@@ -27,9 +27,11 @@ Người gán: **Nguyễn Tú Anh**  |  Ngày: **16/09/2026**
 | Hai người chồng lên nhau | Gán hoàn chỉnh một người rồi mới gán người kia; mỗi điểm phải thuộc đúng cơ thể. Điểm bị người còn lại che dùng `v=1`. | Tránh đường xương kéo sang cơ thể bên cạnh và lỗi `nham_nguoi`. |
 | Người có kích thước nhỏ | Vẫn gán nếu có thể nhận diện là người thuộc phạm vi ảnh; không tự đặt thêm ngưỡng kích thước ngoài hướng dẫn của bài. | Bộ ảnh đã được chọn để các đối tượng cần gán đủ lớn cho COCO-17. |
 
-Trong visibility report hiện tại, ba keypoint có tỷ lệ `v=1` cao nhất là `left_ear` (62%),
-`right_ear` (48%) và `left_hip` (45%). Điều này phù hợp với việc tai thường bị tóc/mũ che,
-còn hông thường phải ước lượng qua quần áo hoặc vật cản.
+Visibility report sau rework ghi nhận 20 ảnh, 29 skeleton và tổng cộng `v=2: 328`,
+`v=1: 130`, `v=0: 35`; trung bình mỗi người có 15,79 keypoint với `v>0`. Ba keypoint có
+tỷ lệ `v=1` cao nhất là `left_ear` (66%), `right_ear` (52%) và `left_hip` (41%). Kết quả này
+phù hợp với đặc điểm của bộ ảnh: tai thường bị tóc hoặc mũ bảo hiểm che, còn hông thường phải
+ước lượng qua quần áo, tư thế nghiêng hoặc vật cản.
 
 ## 3. Ba trường hợp mơ hồ đã gặp
 
@@ -78,5 +80,11 @@ Tôi kiểm tra tính nhất quán bằng ba bước:
    các đường xương có thể kéo sang người khác.
 3. Chạy `visibility_report.py` và xem các cặp trái/phải có tỷ lệ visibility chênh lệch lớn.
    Các chênh lệch được đối chiếu lại với tư thế, vật che và mép ảnh trước khi quyết định sửa.
+
+Sau rework, số điểm `v=0` giảm từ 45 xuống 35 và số điểm `v=1` tăng từ 119 lên 130. Hai cổ
+chân có cùng phân bố `v=2: 15`, `v=1: 5`, `v=0: 9`; hai đầu gối cũng có số điểm `v=0` bằng
+nhau là 7. Điều này cho thấy việc phân biệt `Occluded` và `Outside` ở phần thân dưới đã nhất
+quán hơn. Kết quả đánh giá sau rework đạt OKS trung bình 0,922 và OKS@0.75 bằng 1,000,
+không còn skeleton nào cần rework.
 
 Phần kiểm chéo với bạn cùng nhóm: **không áp dụng vì đây là bài cá nhân**.
